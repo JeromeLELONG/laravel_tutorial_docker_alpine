@@ -72,6 +72,10 @@ install-zend:
 install-laravel-framework: 
 	docker run -t --volume ${PWD}/src/laravel_project/new-project/:/usr/src  php:8.0-apache bash -c 'curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/src --filename=composer.phar && apt-get -yq update && apt-get install -y git && apt-get install -y zip unzip && cd /usr/src && php /usr/src/composer.phar install --ignore-platform-reqs --no-interaction' 
 
+initialize-laravel-project: 
+	docker run -t --volume ${PWD}/:/usr/src  php:8.0-apache bash -c 'cp /usr/src/config/.env /usr/src/src/laravel_project/new-project/.env && cd /usr/src/src/laravel_project/new-project/ && php artisan key:generate && php artisan cache:clear && php artisan config:clear && chmod -R o+w /usr/src/src/laravel_project/new-project/' 
+
+
 install-e2e:
 	docker run -t --volume ${PWD}/e2e/:/usr/src node:16-alpine ash -ci 'cd /usr/src && yarn install'
 
