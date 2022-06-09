@@ -1,9 +1,14 @@
 <?php
 
+error_reporting(E_ALL ^ E_USER_DEPRECATED);
+ini_set("display_errors", 1);
+
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
+
+
 
 /*
 |--------------------------------------------------------------------------
