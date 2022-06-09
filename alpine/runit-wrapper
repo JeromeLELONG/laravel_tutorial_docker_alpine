@@ -1,0 +1,21 @@
+#!/bin/sh
+
+main() {
+  # Dump environment
+  export > /env
+
+  trap onterm SIGTERM SIGINT
+
+  echo "Starting runit"
+  /sbin/runsvdir-start &
+  #/usr/bin/npm start --prefix /auth-proxy &
+  wait "$!"
+}
+
+onterm() {
+  echo "Exiting..."
+  pkill -SIGHUP runsvdir-start
+  exit $?
+}
+
+main "$@"

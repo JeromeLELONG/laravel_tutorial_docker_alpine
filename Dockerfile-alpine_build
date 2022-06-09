@@ -1,0 +1,110 @@
+FROM php:7.0-apache AS builder
+WORKDIR /usr/src
+COPY ./src/siscolidentifiant/composer.json /usr/src/composer.json
+COPY ./src/siscolidentifiant/composer.lock /usr/src/composer.lock
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/src --filename=composer.phar 
+RUN apt-get -yq update && apt-get install -y git 
+RUN apt-get install -y zip unzip 
+RUN cd /usr/src 
+RUN php /usr/src/composer.phar install --ignore-platform-reqs --no-interaction
+
+FROM alpine:3.9
+
+ARG BUILD_DATE
+ARG VCS_REF
+ENV APPLICATION_ENV development
+
+# PHP_INI_DIR to be symmetrical with official php docker image
+ENV PHP_INI_DIR /etc/php/7.1
+
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+COPY php.ini /etc/php/7.1/php.ini
+
+
+# Persistent runtime dependencies
+ARG DEPS="\
+        freetype-dev \
+        libpng-dev \
+        libpng-dev \
+        jpeg-dev \
+        libjpeg-turbo-dev \
+        libmcrypt-dev \
+        php7-mcrypt \
+        php7 \
+        php7-phar \
+        php7-bcmath \
+        php7-calendar \
+        php7-mbstring \
+        php7-exif \
+        php7-ftp \
+        php7-openssl \
+        php7-zip \
+        php7-sysvsem \
+        php7-sysvshm \
+        php7-sysvmsg \
+        php7-shmop \
+        php7-sockets \
+        php7-zlib \
+        php7-bz2 \
+        php7-curl \
+        php7-simplexml \
+        php7-xml \
+        php7-opcache \
+        php7-dom \
+        php7-xmlreader \
+        php7-xmlwriter \
+        php7-tokenizer \
+        php7-ctype \
+        php7-session \
+        php7-fileinfo \
+        php7-iconv \
+        php7-json \
+        php7-posix \
+        php7-pdo \
+        php7-ldap \
+        php7-pdo_mysql \
+        php7-soap \
+        php7-gd \
+        php7-apache2 \
+        curl \
+        poppler-utils \
+        ca-certificates \
+        runit \
+        apache2 \
+        apache2-utils \
+"
+
+
+RUN apk add --no-cache tzdata && cp -r -f /usr/share/zoneinfo/Europe/Paris /etc/localtime
+
+RUN apk update && apk add nodejs && apk add --update npm
+
+COPY ./alpine/auth-proxy /auth-proxy
+WORKDIR /auth-proxy
+RUN npm install
+
+RUN set -x \
+    && apk add --no-cache $DEPS \
+    && mkdir -p /run/apache2 \
+    && ln -sf /dev/stdout /var/log/apache2/access.log \
+    && ln -sf /dev/stderr /var/log/apache2/error.log
+
+COPY tags/apache /
+#RUN a2enmod rewrite
+
+COPY ./alpine/httpd.conf /etc/apache2/httpd.conf
+RUN adduser apache xfs
+RUN adduser apache www-data
+
+COPY ./src/siscolidentifiant /var/www/html/applications/siscolidentifiant
+COPY --from=builder /usr/src/vendor /var/www/html/applications/siscolidentifiant/vendor
+RUN chown -R apache:apache /var/www
+
+COPY ./alpine/runit-wrapper /sbin/runit-wrapper
+RUN chmod 755 /sbin/runit-wrapper
+
+EXPOSE 80
+
+CMD ["/sbin/runit-wrapper"]

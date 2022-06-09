@@ -1,0 +1,40 @@
+<div id="printuser">Imprimer la fiche</div>
+<div id="userView">
+    <h1 style="color:<?php if ($this->insiscol) echo 'blue'; else if ($this->candidat) echo 'white'; ?>;<?php if (!$this->insiscol && $this->candidat) echo 'background-color:blue;font-weight:bold;padding:2px;'; ?>"><?php echo $this->etudiant->getPrenom(); ?> <?php echo $this->etudiant->getNom(); ?></h1>
+    <dl class="view">
+        <dt class="noprint">Statut LDAP :</dt><dd class="noprint"><?php echo $this->etudiant->getStatutLdap(); ?></dd>
+        <dt>SAP Id :</dt><dd>&nbsp;<?php echo $this->etudiant->getSapid(); ?></dd>
+        <dt>INE :</dt><dd>&nbsp;<?php echo $this->etudiant->getIne(); ?></dd>
+        <dt>Numéro carte :</dt><dd>&nbsp;<?php echo $this->etudiant->getNumgrafic(); ?></dd>
+        <dt class="noprint">Date naiss. :</dt><dd  class="noprint">&nbsp;<?php echo $this->etudiant->getDateNaissance(); ?></dd>
+        <dt>Email :</dt>
+        <dd <?php if(!$this->etudiant->getEmail()) { ?>class="noprint" <?php } ?>>
+            <?php if ($this->etudiant->getEmail()) { ?>
+                <a href="mailto:<?php echo $this->etudiant->getEmail(); ?>"><?php echo $this->etudiant->getEmail(); ?></a>
+                <img class="noprint" src="<?php echo $this->baseUrl('img/icons/update.png'); ?>" id="editemail" action="<?php echo $this->url(array("controller" => "etudiant", "action" => "ajouteremail", "dn" => $this->etudiant->getDn()), 'default', true); ?>"/>
+            <?php } else { ?>
+                <form style="display:inline" method="post" action="<?php echo $this->url(array("controller" => "etudiant", "action" => "ajouteremail", "dn" => $this->etudiant->getDn()), 'default', true); ?>">
+                    <input type="text" id="email" name="email" />
+                    <input type="button" value="+" id="addemail" />
+                </form>
+            <?php } ?>
+        </dd>
+        <dt>ID utilisateur :</dt><dd>&nbsp;<b><?php echo $this->etudiant->getLogin(); ?></b> </dd>
+        <dt>Mot de passe :</dt><dd>&nbsp;<b><?php echo $this->etudiant->getPassword(); ?></b><br/>
+            (respecter les majuscules/minuscules)</dd>
+        <dd class="noprint">
+            <?php if ($this->mailsdifferent) { ?>
+                <font color="red">L'email est différente dans siscol et LDAP<br/><?php echo $this->mailsdifferent; ?></font><br/>
+            <?php } ?>
+            <?php if ($this->insiscol) { ?>
+                <font color="blue">Trouvé dans SISCOL !<br/></font>
+            <?php } else if ($this->candidat) { ?>
+                <font style="color:white;background-color:blue;font-weight:bold;padding:2px;"><?php echo $this->name; ?> pas trouvé dans SISCOL mais déjà candidat.</font>
+            <?php } else { ?>
+                <font color="red">Pas trouvé dans SISCOL !<br/></font>
+            <?php } ?>
+        </dd>
+        <dd  class="noprint" id="testpassword" ajax="<?php echo $this->url(array("controller" => "etudiant", "action" => "ajaxtestpassword", "dn" => $this->etudiant->getDn(), "password" => $this->etudiant->getPassword()), 'default', true); ?>">
+        </dd>
+    </dl>
+</div>

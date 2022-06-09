@@ -1,0 +1,14 @@
+{
+	"name" : "crisis/laravel_tutorial_docker_alpine",
+	"version" : "1.0.0",
+	"description" : "Laravel Tutorial Docker Alpine",
+	"license" : "BSD-3-Clause",
+	"keywords" : [
+		"framework",
+		"zf2"
+	],
+	"homepage" : "http://framework.zend.com/",
+	"require" : {
+		"php" : ">=8.1"
+	}
+}

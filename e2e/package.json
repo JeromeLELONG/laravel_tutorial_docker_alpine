@@ -1,0 +1,23 @@
+{
+    "name": "cnam-ta-e2e",
+    "version": "1.0.0",
+    "description": "Cnam TA tests e2e",
+    "private": true,
+    "scripts": {
+        "cypress:open": "cypress open -p 3006 --config baseUrl=http://localhost,video=true",
+        "cypress:install": "cypress install",
+        "test": "cypress run --browser chrome"
+    },
+    "devDependencies": {
+        "@testing-library/cypress": "^5.0.2",
+        "axe-core": "^4.2.0",
+        "cypress": "^7.3.0",
+        "cypress-axe": "^0.12.2",
+        "cypress-downloadfile": "1.2.1",
+        "cypress-file-upload": "^5.0.7",
+        "cypress-maildev": "1.0.1",
+        "cypress-xpath": "1.6.2",
+        "date-fns": "^2.21.3",
+        "pdf-parse": "1.1.1"
+    }
+}

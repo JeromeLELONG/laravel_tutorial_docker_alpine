@@ -1,0 +1,27 @@
+<a class="edit" href="<?php echo $this->url(array("controller"=>"admin","action"=>"edit")); ?>">
+    <img src="<?php echo $this->baseUrl("img/icons/new.png");?>"/>
+</a>
+<table>
+    <tr>
+        <th>User</th>
+        <th>Group</th>
+        <th></th>
+    </tr>
+<?php foreach($this->usergroups as $usergroup){ ?>
+    <tr>
+        <td><?php echo $usergroup->getUser();?></td>
+        <td><?php echo $usergroup->getGroup();?></td>
+        <td>
+            <a class="edit" href="<?php echo $this->url(array("controller"=>"admin","action"=>"edit","id"=>$usergroup->getId())); ?>">
+                <img src="<?php echo $this->baseUrl("img/icons/update.png");?>"/>
+            </a>
+            <a class="delete" href="<?php echo $this->url(array("controller"=>"admin","action"=>"delete"));?>">
+                <img src="<?php echo $this->baseUrl("img/icons/delete.png");?>"/>
+            </a>
+        </td>
+    </tr>
+<?php } ?>
+</table>
+<a class="edit" href="<?php echo $this->url(array("controller"=>"admin","action"=>"edit")); ?>">
+    <img src="<?php echo $this->baseUrl("img/icons/new.png");?>"/>
+</a>

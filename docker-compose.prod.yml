@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+    apache:
+        image: siscolidentifiant
+        user: '${UID}:${GID}'
+        container_name: apache
+        volumes:
+            - "./logs/apache2:/var/log/apache2"
+            - "./config/application.ini:/var/www/html/applications/siscolidentifiant/application/configs/application.ini"
+        env_file:
+        #    - ./config/production.env
+            - ./config/development.env
+        links:
+            - mysql
+            - smtp
+        ports:
+            - "80:80"
+            - "443:443"
+        privileged: true
+    mysql:
+        build: ./mysql
+        container_name: mysql
+        env_file:
+        #    - ./config/production.env
+            - ./config/development.env
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+        volumes:
+#            - dbdata:/var/lib/mysql
+            - ./dbdata:/var/lib/mysql
+            - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+        ports:
+            - 3306:3306
+ #       env_file:
+ #           - ./mysql.env
+
+    smtp:
+        image:  djfarrelly/maildev
+        ports:
+            - 3002:80
+
+    ldap:
+        container_name: ldap
+        env_file:
+            - ./config/test.env
+        build: ./ldap
+        ports:
+            - "389:389"
+        volumes:
+            - "./ldap/:/ldap/"
+
+volumes:
+    dbdata: {}

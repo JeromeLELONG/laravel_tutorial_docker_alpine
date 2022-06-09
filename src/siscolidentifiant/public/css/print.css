@@ -1,0 +1,19 @@
+/* 
+    Document   : print
+    Created on : 15 mai 2013, 16:35:41
+    Author     : JCB
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.noprint {
+    display:none;
+}
+
+dt {
+    float:left;
+}
