@@ -25,6 +25,8 @@ else
 	DOCKER_COMPOSE_PROD_RUN = docker-compose -f docker-compose.test.yml run --rm --no-deps
 endif
 
+init-dev: install initialize-laravel-project start-alpine
+
 start: ## Start the client and server in docker for local development
 	docker-compose up --build -d
 
@@ -61,13 +63,7 @@ delete-images:
 	docker rmi laravel_tutorial_docker_alpine_mysql:latest
 	docker rmi laravel_tutorial_docker_alpine_ldap:latest
 
-install: install-php install-e2e
-
-install-php: 
-	docker run -t --volume ${PWD}/src/:/usr/src  php:8.0-apache bash -c 'curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/src --filename=composer.phar && apt-get -yq update && apt-get install -y git && apt-get install -y zip unzip && cd /usr/src && php /usr/src/composer.phar install --ignore-platform-reqs --no-interaction' 
-
-install-zend: 
-	docker run -t --volume ${PWD}/src/siscolidentifiant/:/usr/src  php:5.6-apache bash -c 'curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/src --filename=composer.phar && apt-get -yq update && apt-get install -y git && apt-get install -y zip unzip && cd /usr/src && php /usr/src/composer.phar install --ignore-platform-reqs --no-interaction' 
+install: install-laravel-framework
 
 install-laravel-framework: 
 	docker run -t --volume ${PWD}/src/laravel_project/new-project/:/usr/src  php:8.0-apache bash -c 'curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/src --filename=composer.phar && apt-get -yq update && apt-get install -y git && apt-get install -y zip unzip && cd /usr/src && php /usr/src/composer.phar install --ignore-platform-reqs --no-interaction' 
