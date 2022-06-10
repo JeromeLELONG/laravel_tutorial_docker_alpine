@@ -1,0 +1,11 @@
+dn: dc=idevelopment,dc=info
+dc: idevelopment
+o: iDevelopment.info LDAP Server
+description: Root entry for iDevelopment.info. 
+ iDevelopment.info is a public website that provides a professional forum to exchange 
+ information, ideas, and expertise on advanced topics in the IT and scientific fields. 
+ The audience for iDevelopment.info includes Database Administrators, System Administrators, 
+ Developers, Computer Scientists, Software Engineers, and Mathematicians.
+objectClass: top
+objectclass: dcObject
+objectclass: organization

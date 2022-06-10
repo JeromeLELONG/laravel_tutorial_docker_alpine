@@ -1,0 +1,13 @@
+<h1>Mise à jour LDAP</h1>
+<?php
+        for($i=97; $i<=122; $i++)
+            for($j=97; $j<=122; $j++) {
+//                for($k=97; $k<=122; $k++) {
+//                    for($l=97; $l<=122; $l++)
+//                        for($m=97; $m<=122; $m++)
+
+                            $letters = chr($i).chr($j);
+?>
+<input type="hidden" size="80" id="urlfork" value="<?php echo $this->urlfork;?>"/>
+<span style="font-size:6pt" class="fork" param="<?php echo $letters;?>"><?php echo $letters;?></span><br/>
+<?php  } ?>

@@ -1,0 +1,19 @@
+{
+    "defaultCommandTimeout": 60000,
+    "requestTimeout": 60000,
+    "responseTimeout": 60000,
+    "numTestsKeptInMemory": 10,
+    "chromeWebSecurity": false,
+    "baseUrl": "http://apache",
+    "video": false,
+    "watchForFileChanges": true,
+    "port": 3006,
+    "viewportHeight": 900,
+    "viewportWidth": 1280,
+    "env": {
+        "MAILDEV_PROTOCOL": "http",
+        "MAILDEV_HOST": "smtp",
+        "MAILDEV_SMTP_PORT": "1025",
+        "MAILDEV_API_PORT": "1080"
+      }
+}

@@ -1,0 +1,12 @@
+dn: o=Personnel, dc=cnam,dc=fr
+changetype: add
+telephoneNumber: 00 00 00 00 00
+objectClass: Top
+objectClass: Organization
+o: Personnel
+
+dn: ou=People, o=Personnel, dc=cnam,dc=fr
+ou: People
+objectClass: Top
+objectClass: organizationalUnit
+passwordAllowChange: TRUE

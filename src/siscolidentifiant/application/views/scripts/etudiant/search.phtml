@@ -1,0 +1,54 @@
+<h1>Rechercher un compte élève</h1>
+Pour rechercher un élève, vous pouvez renseigner un ou plusieurs des champs suivants.<br/>
+Vous pouvez utiliser le caractère "*" comme joker. Ainsi une recherche sur l'adresse email
+avec la valeur "gobert@*" retournera tous les élèves dont l'adresse email commence par "gobert@".<br/>
+Lors d'une recherche sur le nom, le joker est placé d'office derrière la valeur renseignée.
+Ainsi, si la valeur renseignée est "gobert", le resultat contiendra les élèves de nom "gobert",
+mais également "goberville" ou "gobertin".
+
+<?php echo $this->form;?>
+<?php if(count($this->entries)>0) {?>
+<h3><?php echo $nb=count($this->entries);?> réponse<?php if($nb>1) echo 's';?></h3>
+<input type="hidden" id="siscolmail" value="<?php echo $this->siscolmail; ?>" />
+<div class="prelist">
+    <table class="list" cellpadding="0" cellspacing="0">
+        <tr>
+            <th title="Identifiant National Etudiant du Cnam">INE Cnam</th>
+            <th title="Ancien numéro de carte Grafic ou Intec">N° Carte</th>
+            <th title="Nom et prénom de l'élève">Nom et prénom</th>
+        </tr>
+        <?php foreach($this->entries as $etudiant) {?>
+        <tr class="etudiant" id="<?php if(!$etudiant->aRecreer()) echo $etudiant->getLogin();?>"
+            ajax="<?php if($etudiant->aRecreer())
+                    echo $this->url(array('controller'=>'Etudiant','action'=>'ajaxalert','etudiant'=>$etudiant->getSapid()),'default',true);
+                else echo $this->url(array('controller'=>'Etudiant','action'=>'ajaxview','etudiant'=>$etudiant->getDn()),'default',true); ?>">
+            <td><a class="view"
+                   href="<?php echo $this->url(array('controller'=>'Etudiant','action'=>'view','etudiant'=>$etudiant->getDn()),'default',true);?>">
+                    <?php if(!$etudiant->aRecreer()) echo $etudiant->getIne();?>
+                </a>
+            </td>
+            <td><a class="view"
+                   href="<?php echo $this->url(array('controller'=>'Etudiant','action'=>'view','etudiant'=>$etudiant->getDn()),'default',true);?>">
+                    <?php if(!$etudiant->aRecreer()) echo $etudiant->getSapid();?>
+                </a>
+            </td>
+            <td title="SapId <?php echo $etudiant->getSapid();?> - Date N. <?php echo $etudiant->getDateNaissance();?>" style="color:<?php if($etudiant->inSiscol()) {?>blue<?php } else if($etudiant->aRecreer()){?>orange<?php }else if($etudiant->isCandidat()){?>white<?php } else{?>blue<?php }?>;<?php if($etudiant->isCandidat()){?>background-color:blue;font-weight:bold<?php }?>"><?php echo $etudiant->getNom();?> <?php echo $etudiant->getPrenom();?></td>
+        </tr>
+        <?php unset($etudiant);}?>
+    </table>
+</div>
+<div id="zoom"></div>
+<?php } else if($this->message){?>
+<div class="alert"><?php echo $this->message;?></div>
+<?php }
+if($this->listacreer) {
+?>
+<div id="dansreprise">
+    <div class="bar"><a href="javascript:void(0);">fermer</a></div>
+    <h1>ATTENTION</h1>
+    Des élèves ont été trouvés dans la liste des auditeurs à créer manuellement :<br/><br/>
+<?php 
+    echo $this->listacreer;
+?>
+</div>
+<?php }?>

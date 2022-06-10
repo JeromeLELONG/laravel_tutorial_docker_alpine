@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="/img/favicon.ico" rel="shortcut icon"/>
+        <title>[Cnam] Gestion des comptes élèves</title>
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('css/instit.css')); ?>
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('css/global.css')); ?>
+        <?php //echo $this->headLink()->appendStylesheet($this->baseUrl('css/jpassword.css')); ?>
+        <?php $this->headScript()->appendFile($this->baseUrl('js/jquery.js','text/javascript'));?>
+        <?php //$this->headScript()->appendFile($this->baseUrl('js/jpassword/jquery.jpassword.js','text/javascript'));?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('js/control.js','text/javascript'));?>
+    </head>
+    <body>
+        <center>
+        <?php 
+        if(getenv('APPLICATION_ENV')=='development' || APPLICATION_ENV == 'development') echo "Environnement de développement";
+        if(getenv('APPLICATION_ENV')=='testing' || APPLICATION_ENV == 'testing') echo "Environnement de test";
+        if(getenv('APPLICATION_ENV')=='integration' || APPLICATION_ENV == 'integration') echo "Environnement d'intégration";
+        ?>
+        </center>
+        <div id="content">
+            <div id="banniere">
+                <div id="bandeau">
+                    <a href="http://www.cnam.fr">
+                        <img id="logo" src="<?php echo $this->baseUrl('img/logo_cnam.jpg');?>" title="Accueil Cnam : formation, recherche, culture scientifique et technique" alt="Accueil Cnam : formation, recherche, culture scientifique et technique"/>
+                    </a>
+                    <div id="title"><a href="/">Direction des Systèmes <b>d'Information</b></a></div>
+                </div>
+                <div id="sous_bandeau">
+                    <img src="<?php echo $this->baseUrl('img/20.jpg');?>"/>
+                </div>
+                <div id="intercal"><img src="<?php echo $this->baseUrl('img/87.jpg');?>"/></div>
+                <div id="signature">
+                    <span class="sign_1">Gestion </span>
+                    <span class="sign_2">des </span>
+                    <span class="sign_3">comptes </span>
+                    <span class="sign_4">élèves </span>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div id="menu">
+                <?php if($this->admin) {?>
+                <a href="<?php echo $this->url(array('controller'=>'admin',"action"=>"user"),'default',true) ?>">Administration</a>
+                <br/><br/>
+                <a href="<?php echo $this->url(array('controller'=>'etudiant',"action"=>"reinitue"),'default',true) ?>">Elèves d'une UE</a>
+                <br/><br/>
+                    <?php } if
+($this->islogged) {?>
+                <a href="<?php echo $this->url(array('controller'=>'etudiant'),'default',true) ?>">Compte élève</a>
+                <br/><br/><a href="<?php echo $this->baseUrl();?>/index/logout">Deconnexion</a>
+    <?php } else if(!$this->login) echo $this->loginForm;?>
+            </div>
+            <div id="main">
+                
+<?php echo $this->layout()->content; ?>
+
+            </div>
+            
+            
+        </div>
+        <div id="Footer">
+            <div style="margin-left: 122px; margin-right: 122px; margin-top: 20px; margin-bottom: 20px; text-align: center; font-style: italic; border: 1px solid #c1002a; background-color: #ffffff;">SISCOLIDENTIFIANT - Direction des systèmes d'information - version 
+            <?php
+
+$string = file_get_contents("/var/www/html/applications/siscolidentifiant/composer.json");
+$json_a = json_decode($string, true);
+
+echo $json_a['version'];
+
+?>
+</div>  
+             </div>
+    </body>
+</html>

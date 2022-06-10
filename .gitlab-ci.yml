@@ -1,0 +1,27 @@
+stages:
+    - test
+    - code-quality
+
+image: crisis7/docker_build
+
+services:
+    - docker:dind
+
+variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    GIT_SSL_NO_VERIFY: "true"
+
+before_script:
+    - export NODE_ENV="test"
+    - export TEST_SUITE="all"
+
+test:
+    stage: test
+    tags:
+        - docker
+    script:
+        - make install
+        - make build-alpine
+        - make test-e2e

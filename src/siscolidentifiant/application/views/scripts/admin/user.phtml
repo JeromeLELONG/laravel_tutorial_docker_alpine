@@ -1,0 +1,54 @@
+<?php echo $this->form; ?>
+<?php if(count($this->foundusers)>0) {?>
+<div id="newuser">
+
+<?php
+    foreach($this->foundusers as $fuser) {
+    if($fuser && $fuser->getNom()) { ?>
+        <a href="<?php echo $this->url(array("controller"=>"admin","action"=>"adduser","login"=>$fuser->getLogin()),'default',null);?>">
+            <img src="<?php echo $this->baseUrl("img/icons/add.png");?>"/>
+        </a>
+        <?php echo $fuser->getNom()." ".$fuser->getPrenom(); ?>
+        <br/>
+    <?php } 
+ }?>
+</div>
+ <?php } ?>
+
+<table class="users" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <th></th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Groupes</th>
+    </tr>
+<?php foreach($this->users as $user){?>
+    <tr>
+        <td>
+            <a class="delete" href="<?php echo $this->url(array("controller"=>"admin","action"=>"deleteuser","login"=>$user->getLogin()));?>">
+                <img src="<?php echo $this->baseUrl("img/icons/delete.png");?>"/>
+            </a>
+        </td>
+        <td><?php echo $user->getNom();?></td>
+        <td><?php echo $user->getPrenom();?></td>
+        <td>
+            <a class="addgroup" title="Ajouter à un groupe" href="<?php echo $this->url(array("controller"=>"admin","action"=>"adduseringroup","login"=>$user->getLogin()));?>">
+                <img src="<?php echo $this->baseUrl("img/icons/add.png");?>"/> ajouter
+            </a>
+            <?php if(array_key_exists($user->getLogin(), $this->groups)) { 
+                foreach($this->groups[$user->getLogin()] as $usergroup) { ?>
+                    <a class="deletegroup" id="<?php echo $usergroup.'_'.$user->getLogin(); ?>" href="<?php echo $this->url(array("controller"=>"admin","action"=>"deleteusergroup","login"=>$user->getLogin(),"group"=>$usergroup));?>">
+                        <br/>
+                        <img src="<?php echo $this->baseUrl("img/icons/delete.png");?>"/>
+                        <?php echo $usergroup; ?>
+                    </a>
+                <?php }
+            }
+                //echo $this->groups[$user->getLogin()];
+            
+            ?>
+        </td>
+    </tr>
+<?php } ?>
+</table>
+<div id="zoom"></div>

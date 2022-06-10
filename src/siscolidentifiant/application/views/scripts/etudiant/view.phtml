@@ -1,0 +1,27 @@
+<h1 style="color:<?php if($this->insiscol) echo 'blue'; else if($this->candidat) echo 'white'; ?>;<?php if(!$this->insiscol && $this->candidat) echo 'background-color:blue;font-weight:bold;padding:2px;'; ?>"><?php echo $this->etudiant->getPrenom();?> <?php echo $this->etudiant->getNom();?></h1>
+<div id="printuser">Imprimer la fiche</div>
+<p id="userView">
+    SAP Id : <?php echo $this->etudiant->getSapid();?><br/>
+    INE : <?php echo $this->etudiant->getIne();?><br/>
+    Numéro carte : <?php echo $this->etudiant->getNumgrafic();?><br/>
+    Date de naissance : <?php echo $this->etudiant->getDateNaissance();?><br/>
+    Email : <a href="mailto:<?php echo $this->etudiant->getEmail();?>"><?php echo $this->etudiant->getEmail();?></a><br>
+    ID utilisateur : <b><?php echo $this->etudiant->getLogin();?></b><br>
+    Mot de passe : <b><?php echo $this->etudiant->getPassword();?></b> (respecter les majuscules/minuscules)<br>
+    <?php if($this->insiscol) {?>
+    <font  class="noprint" color="blue"><?php echo $this->name;?> trouvé dans SISCOL !<br/>Utiliser l'accès élève.</font>
+    <?php } else if($this->candidat){?>
+    <font  class="noprint" style="color:white;background-color:blue;font-weight:bold;padding:2px;"><?php echo $this->name;?> pas trouvé dans SISCOL mais déjà candidat.</font>
+    <?php } else {?>
+    <font  class="noprint" color="red"><?php echo $this->name;?> pas trouvé dans SISCOL !<br/>Choisir Je n'ai pas d'identifiant de connexion sur le portail d'inscription.</font>
+    <?php } ?>
+</p>
+<p>
+    Si <?php echo $this->etudiant->getPrenom();?> <?php echo $this->etudiant->getNom();?> a changé son mot de passe et perdu ce nouveau mot de passe, vous pouvez le remettre
+    à sa valeur d'origine (<?php echo $this->etudiant->getPassword();?>) en cliquant sur<br><br>
+    <form action="<?php echo $this->url(array("action"=>"reinit","controller"=>"etudiant","dn"=>$this->etudiant->getDn()),'default',true);?>">
+        <input id="sendMail" type="checkbox" name="sendMail"> Alerter l'élève par courriel<br/><br/>
+        <input type="submit" id="reinit" value="réinitialiser le mot de passe"/>
+    </form>
+</p>
+

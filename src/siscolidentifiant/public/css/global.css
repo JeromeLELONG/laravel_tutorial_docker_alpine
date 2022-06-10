@@ -1,0 +1,223 @@
+.list input[type="text"]{
+    height:12px;
+    font-size: 10pt;
+}
+
+label {
+    font-size: 12px;
+}
+
+div.prelist {
+    float : left;
+    max-width:290pt;
+    height: 250px ;
+    padding-right:20px;
+    overflow : scroll;
+}
+table.list {
+    display : block;
+    float:left;
+    font-size:10pt;
+}
+table.list th {
+    background-color: #C1002A;
+    padding:3px 10px;
+    color:white;
+    text-align: left;
+    white-space: nowrap;
+}
+
+table.list td {
+    padding:3px 10px;
+    white-space: nowrap;
+}
+
+table.list td.alt{
+    background-color: #E4DED6;
+}
+
+.list input,.list label{
+    height:15px;
+/*    float:left;*/
+}
+
+.list dl {
+}
+
+.list dd {
+    float:left;
+    margin:0 5px 0 5px;
+}
+.list dt{
+    float:left;
+    overflow: hidden;
+    padding:2px;
+    text-align: left;
+}
+.list dd input[type="text"]{
+    width:20px;
+    margin:2px;
+}
+
+
+.edit dt,.search dt {
+    float:left;
+    width:200px;
+}
+.edit fieldset {
+    clear:left;
+    width:720px;
+}
+.edit fieldset dt {
+    float:left;
+    width:40px;
+}
+
+.edit dd,.search dd {
+    margin: 0px;
+    margin:2px;
+}
+
+.view dt {
+    clear:left;
+    float:left;
+    width:100px;
+}
+
+.view dd {
+    margin: 2px;
+}
+
+.ajaxbox{
+    display:none;
+    position:absolute;
+    background-color:white;
+    padding:10px;
+    border:5px ridge #C1002A;
+    text-align: left;
+}
+.ajaxbox dt{
+    color:#555;
+    font-size:8pt;
+}
+
+#zoom{
+    padding:20px;
+    width:300px;
+    float:left;
+}
+#zoomdt{
+    float:left;
+    padding:5px;
+}
+
+#content{
+    padding-bottom: 400px;
+}
+#menu {
+    width:140px;
+}
+
+#menu form {
+    font-size: 10pt;
+}
+
+#menu input {
+    height:20px;
+    font-size:8pt;
+    width:80px;
+}
+
+#menu div {
+    padding:10px;
+    background-color: #ffd;
+    margin:10px 0;
+}
+#menu img {
+    float:left;
+    margin-right:10px;
+}
+#main{
+    margin-left:160px;
+}
+
+.ldap dt,.ldap dd{
+    float:left;
+    margin:2px;
+}
+.users {
+    float:left;
+    clear:left;
+    margin-top:10px;
+}
+.users th{
+    background-color: #C1002A;
+    color:white;
+    text-align: left;
+}
+.users td {
+    padding-right: 15px;
+}
+#newuser {
+}
+#newuser{
+    clear:both;
+    
+}
+
+.etudiant {
+    cursor: pointer;
+}
+#etudiants {
+    font-size: 8pt;
+
+}
+#etudiants td{
+    padding:2px;
+    margin:0;
+}
+
+#reinit{
+    background-color: #C1002A;
+    color:white;
+    font-weight: bold;
+    text-align: center;
+    padding:3px;
+    border:5px;
+    border-style: groove;
+    border-color: #a00;
+}
+#dansreprise {
+    position:absolute;
+    width:520px;
+    height:300px;
+    top:80px;
+    left:200px;
+    background-color: #fdd;
+    padding:10px;
+    border:10px ridge #a00;
+}
+
+#dansreprise table {
+    font-size: 10pt;
+    
+}
+#dansreprise table td{
+    border:0;
+    border-right:1px solid #ccc;
+    border-left:1px solid #ccc;
+    padding : 2px 5px;
+}
+#dansreprise .bar{
+    float:right;
+}
+
+#printuser{
+    font-size: 16pt;
+    padding:10px 0 10px 60px;
+    border:1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;        
+    background: url('/img/icons/print.png') 15px 5px no-repeat #eee;
+    font-weight: bold;
+}

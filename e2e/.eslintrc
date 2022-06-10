@@ -1,0 +1,14 @@
+{
+    "env": {
+        "cypress/globals": true,
+        "jest": false
+    },
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "plugins": ["cypress"],
+    "rules": {
+        "jest/valid-expect": "off",
+        "jest/expect-expect": "off"
+    }
+}

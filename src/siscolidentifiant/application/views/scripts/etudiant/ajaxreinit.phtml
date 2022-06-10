@@ -1,0 +1,17 @@
+<br>
+<?php if($this->reinit) {?>
+<font color="#0c0">Mot de passe ré-initialisé !</font>
+<?php } else { ?>
+<font color="#c00">Echec de la réinitialisation !</font>
+<?php } ?><br/>
+<?php if($this->mailsended){?>
+<font color="#0c0">Courriel envoyé à <b><?php echo $this->mailsended;?></b></font>
+<?php }
+//else {?>
+<!--
+<font color="#c00">Echec de l'envoi de mail !
+    <?php //if($this->mail=="siscol.mel@cnam.fr") {?>
+        <br/>L'adresse mail siscol.mel@cnam.fr ne permet pas de délivrer le message à l'élève.
+    <?php //}?>
+</font> -->
+<?php //}?>

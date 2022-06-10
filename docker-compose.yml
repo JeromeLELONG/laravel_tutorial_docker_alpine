@@ -1,0 +1,56 @@
+version: '3.4'
+
+services:
+    apache:
+    #image: php:apache
+        user: '${UID}:${GID}'
+        build: ./php
+        container_name: apache
+        volumes:
+            - "./src/:/var/www/html/applications/"
+            - "./logs/apache2:/var/log/apache2"
+            - "./config/php.ini:/etc/php/php.ini"
+            - "./config/ssmtp.conf:/etc/ssmtp/ssmtp.conf"
+        env_file:
+            - ./config/development.env
+        links:
+            - mysql
+            - ldap
+            - smtp
+        ports:
+            - "80:80"
+            - "443:443"
+        privileged: true
+    mysql:
+        build: ./mysql
+        container_name: mysql
+        env_file:
+            - ./config/development.env
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+        volumes:
+#            - dbdata:/var/lib/mysql
+            - ./dbdata:/var/lib/mysql
+            - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+        ports:
+            - 3306:3306
+ #       env_file:
+ #           - ./mysql.env
+    ldap:
+        container_name: ldap
+        env_file:
+            - ./config/development.env
+        build: ./ldap
+        ports:
+            - "389:389"
+        volumes:
+            - "./ldap/:/ldap/"
+
+    smtp:
+        image:  djfarrelly/maildev
+        ports:
+            - 3002:80
+
+volumes:
+    dbdata: {}
