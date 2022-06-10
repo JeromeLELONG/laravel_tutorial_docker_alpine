@@ -2,7 +2,6 @@ node_modules
 src/siscolidentifiant/vendor
 dbdata/*
 logs/apache2/*
-config/development.env
 config/application.ini
 composer.phar
 e2e/cypress_cache/*
